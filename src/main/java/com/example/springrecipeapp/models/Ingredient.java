@@ -46,12 +46,12 @@ public class Ingredient {
         this.id = id;
     }
 
-    public Set<Recipe> getRecipe() {
-        return recipe;
+    public Set<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setRecipe(Set<Recipe> recipe) {
-        this.recipe = recipe;
+    public void setRecipes(Set<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     public UnitOfMeasure getUnitOfMeasure() {
