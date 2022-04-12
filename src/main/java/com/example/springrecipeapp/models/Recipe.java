@@ -1,8 +1,10 @@
 package com.example.springrecipeapp.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "recipes")
 public class Recipe {
 
     @Id
@@ -24,6 +26,9 @@ public class Recipe {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
+    @ManyToMany(mappedBy = "recipe")
+    private Set<Ingredient> ingredient;
 
     public String getDescription() {
         return description;
