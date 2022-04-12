@@ -17,7 +17,7 @@ public class Ingredient {
     @ManyToMany
     @JoinTable(name = "recipe_ingredient", joinColumns = @JoinColumn(name = "ingredient_id"),
     inverseJoinColumns = @JoinColumn(name = "recipe_id"))
-    private Set<Recipe>  recipe;
+    private Set<Recipe>  recipes;
 
     @OneToOne
     private UnitOfMeasure unitOfMeasure;

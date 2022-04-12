@@ -29,8 +29,11 @@ public class Recipe {
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
-    @ManyToMany(mappedBy = "recipe")
-    private Set<Ingredient> ingredient;
+    @ManyToMany(mappedBy = "recipes")
+    private Set<Ingredient> ingredients;
+
+    @ManyToMany(mappedBy = "recipes")
+    private Set<Category> categories;
 
     public String getDescription() {
         return description;
@@ -120,11 +123,19 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public Set<Ingredient> getIngredient() {
-        return ingredient;
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredient(Set<Ingredient> ingredient) {
-        this.ingredient = ingredient;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
