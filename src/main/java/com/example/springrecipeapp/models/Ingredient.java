@@ -19,6 +19,8 @@ public class Ingredient {
     inverseJoinColumns = @JoinColumn(name = "recipe_id"))
     private Set<Recipe>  recipe;
 
+    @OneToOne
+    private UnitOfMeasure unitOfMeasure;
 
     public String getDescription() {
         return description;
@@ -36,11 +38,27 @@ public class Ingredient {
         this.amount = amount;
     }
 
-    public Recipe getRecipe() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<Recipe> getRecipe() {
         return recipe;
     }
 
-    public void setRecipe(Recipe recipe) {
+    public void setRecipe(Set<Recipe> recipe) {
         this.recipe = recipe;
+    }
+
+    public UnitOfMeasure getUnitOfMeasure() {
+        return unitOfMeasure;
+    }
+
+    public void setUnitOfMeasure(UnitOfMeasure unitOfMeasure) {
+        this.unitOfMeasure = unitOfMeasure;
     }
 }
