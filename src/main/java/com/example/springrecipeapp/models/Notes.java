@@ -1,8 +1,11 @@
 package com.example.springrecipeapp.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 @Table(name = "notes")
 public class Notes {
 
@@ -14,20 +17,4 @@ public class Notes {
     @OneToOne
     private Recipe recipe;
 
-    @Lob
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
 }
