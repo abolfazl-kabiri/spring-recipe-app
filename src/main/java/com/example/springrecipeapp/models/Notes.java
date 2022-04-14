@@ -1,14 +1,12 @@
 package com.example.springrecipeapp.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +16,8 @@ public class Notes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Lob
     private String notes;
 
     @OneToOne

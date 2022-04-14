@@ -1,9 +1,7 @@
 package com.example.springrecipeapp.bootstrap;
 
 import com.example.springrecipeapp.models.*;
-import com.example.springrecipeapp.services.CategoryService;
 import com.example.springrecipeapp.services.RecipeService;
-import com.example.springrecipeapp.services.UnitOfMeasureService;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -18,14 +16,9 @@ import java.util.Set;
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final RecipeService recipeService;
-    private final CategoryService categoryService;
-    private final UnitOfMeasureService unitOfMeasureService;
 
-    public RecipeBootstrap(RecipeService recipeService,
-                           CategoryService categoryService, UnitOfMeasureService unitOfMeasureService) {
+    public RecipeBootstrap(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.categoryService = categoryService;
-        this.unitOfMeasureService = unitOfMeasureService;
     }
 
     @Override
@@ -47,7 +40,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         Category fastFood = Category.builder().id(3L).categoryName("fastFood").build();
 
         //create a recipe
-        Recipe guacRecipe = new Recipe();
+        Recipe guacRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
         guacRecipe.setDescription("Perfect Guacamole");
         guacRecipe.setPrepTime(10);
         guacRecipe.setCookTime(0);
@@ -93,7 +86,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         recipes.add(guacRecipe);
 
-        Recipe tacosRecipe = new Recipe();
+        Recipe tacosRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
         tacosRecipe.setDescription("Spicy Grilled Chicken Taco");
         tacosRecipe.setCookTime(9);
         tacosRecipe.setPrepTime(20);

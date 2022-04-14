@@ -1,15 +1,13 @@
 package com.example.springrecipeapp.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Data
+//@EqualsAndHashCode(exclude = {"ingredients", "categories"})
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,12 +19,15 @@ public class Recipe {
     private Long id;
 
 
+    @Lob
     private String description;
     private Integer cookTime;
     private Integer prepTime;
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @Lob
