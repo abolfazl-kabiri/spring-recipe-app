@@ -39,7 +39,7 @@ class RecipeServiceImplTest {
     void delete() {
 
         service.delete(recipe);
-        assertNull(service.findByDescription(recipe.getDescription()));
+        assertNull(service.findById(recipe.getId()));
     }
 
 

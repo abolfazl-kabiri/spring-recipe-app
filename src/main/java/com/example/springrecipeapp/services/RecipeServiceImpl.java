@@ -23,8 +23,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void deleteByDescription(String description) {
-        recipeRepository.deleteByDescription(description);
+    public void deleteById(Long id) {
+        recipeRepository.deleteById(id);
     }
 
     @Override
@@ -40,8 +40,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findByDescription(String description) {
-        return recipeRepository.findByDescription(description).orElse(null);
+    public Recipe findById(Long id) {
+        return recipeRepository.findById(id).orElse(null);
     }
 
     @Override
