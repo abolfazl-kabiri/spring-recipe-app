@@ -1,5 +1,6 @@
 package com.example.springrecipeapp.services;
 
+import com.example.springrecipeapp.commands.RecipeCommand;
 import com.example.springrecipeapp.models.Recipe;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface RecipeService {
     Set<Recipe> getRecipes();
     Recipe findById(Long id);
     Iterable<Recipe> saveAll(List<Recipe> recipes);
+    RecipeCommand saveCommand(RecipeCommand command);
 
 }

@@ -1,5 +1,8 @@
 package com.example.springrecipeapp.services;
 
+import com.example.springrecipeapp.commands.RecipeCommand;
+import com.example.springrecipeapp.converters.RecipeCommandToRecipe;
+import com.example.springrecipeapp.converters.RecipeToRecipeCommand;
 import com.example.springrecipeapp.models.Recipe;
 import com.example.springrecipeapp.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
@@ -12,9 +15,14 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeToRecipeCommand recipeToRecipeCommandConverter;
+    private final RecipeCommandToRecipe recipeCommandToRecipeConverter;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             RecipeToRecipeCommand recipeToRecipeCommandConverter, RecipeCommandToRecipe recipeCommandToRecipeConverter) {
         this.recipeRepository = recipeRepository;
+        this.recipeToRecipeCommandConverter = recipeToRecipeCommandConverter;
+        this.recipeCommandToRecipeConverter = recipeCommandToRecipeConverter;
     }
 
     @Override
@@ -49,5 +57,9 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.saveAll(recipes);
     }
 
-
+    @Override
+    public RecipeCommand saveCommand(RecipeCommand command) {
+        Recipe savedRecipe = save(recipeCommandToRecipeConverter.convert(command));
+        return recipeToRecipeCommandConverter.convert(savedRecipe);
+    }
 }

@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class RecipeController {
 
     private final RecipeService recipeService;
-    private final RecipeCommandToRecipe converter;
 
-    public RecipeController(RecipeService recipeService, RecipeCommandToRecipe converter) {
+    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.converter = converter;
     }
 
 
@@ -45,8 +43,8 @@ public class RecipeController {
             throw new RuntimeException("binding result has errors");
         }
 
-        Recipe savedRecipe = recipeService.save(converter.convert(recipe));
-        return "redirect:/recipe/show/" + savedRecipe.getId();
+        RecipeCommand savedCommand = recipeService.saveCommand(recipe);
+        return "redirect:/recipe/show/" + savedCommand.getId();
     }
 
 
