@@ -15,5 +15,6 @@ public interface RecipeService {
     Recipe findById(Long id);
     Iterable<Recipe> saveAll(List<Recipe> recipes);
     RecipeCommand saveCommand(RecipeCommand command);
+    RecipeCommand findCommandById(Long id);
 
 }

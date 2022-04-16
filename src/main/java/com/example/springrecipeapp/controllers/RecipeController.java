@@ -1,7 +1,6 @@
 package com.example.springrecipeapp.controllers;
 
 import com.example.springrecipeapp.commands.RecipeCommand;
-import com.example.springrecipeapp.converters.RecipeCommandToRecipe;
 import com.example.springrecipeapp.models.Recipe;
 import com.example.springrecipeapp.services.RecipeService;
 import org.springframework.stereotype.Controller;
@@ -45,6 +44,15 @@ public class RecipeController {
 
         RecipeCommand savedCommand = recipeService.saveCommand(recipe);
         return "redirect:/recipe/show/" + savedCommand.getId();
+    }
+
+
+    @GetMapping("/recipe/update/{recipe_id}")
+    public String initUpdateRecipeForm(@PathVariable Long recipe_id, Model model) {
+        RecipeCommand recipe = recipeService.findCommandById(recipe_id);
+        model.addAttribute("recipe", recipe);
+        return "recipe/recipeForm";
+
     }
 
 
