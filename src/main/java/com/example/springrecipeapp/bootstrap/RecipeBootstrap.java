@@ -41,7 +41,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         UnitOfMeasure teaSpoon = unitOfMeasureService.findByDescription("table spoon");
         UnitOfMeasure each = unitOfMeasureService.findByDescription("each");
         UnitOfMeasure tableSpoon = unitOfMeasureService.findByDescription("table spoon");
-        
+
         Category american = categoryService.findByCategoryName("American");
         Category persian = categoryService.findByCategoryName("Persian");
         Category fastFood = categoryService.findByCategoryName("Fast Food");
