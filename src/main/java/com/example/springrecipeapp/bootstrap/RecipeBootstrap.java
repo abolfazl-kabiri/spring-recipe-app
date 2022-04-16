@@ -38,19 +38,15 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private List<Recipe> getRecipes() {
         List<Recipe> recipes = new ArrayList<>(2);
 
-        //read unit of measures
         UnitOfMeasure teaSpoon = unitOfMeasureService.findByDescription("table spoon");
         UnitOfMeasure each = unitOfMeasureService.findByDescription("each");
         UnitOfMeasure tableSpoon = unitOfMeasureService.findByDescription("table spoon");
-
-        //create categories
+        
         Category american = categoryService.findByCategoryName("American");
         Category persian = categoryService.findByCategoryName("Persian");
         Category fastFood = categoryService.findByCategoryName("Fast Food");
 
 
-        //create a recipe
-//        Recipe guacRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
         Recipe guacRecipe = new Recipe();
         guacRecipe.setDescription("Perfect Guacamole");
         guacRecipe.setPrepTime(10);
@@ -98,7 +94,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         recipes.add(guacRecipe);
 
-//        Recipe tacosRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
         Recipe tacosRecipe = new Recipe();
         tacosRecipe.setDescription("Spicy Grilled Chicken Taco");
         tacosRecipe.setCookTime(9);
