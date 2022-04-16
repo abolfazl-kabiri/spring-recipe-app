@@ -137,6 +137,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(.5)).description("Salt").unitOfMeasure(teaSpoon).recipes(tascoSet).build());
         tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(1)).description("Clove of Garlic, Choppedr").unitOfMeasure(each).recipes(tascoSet).build());
         tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(1)).description("finely grated orange zestr").unitOfMeasure(each).recipes(tascoSet).build());
+        System.out.println(tacosRecipe.getIngredients().size());
 
         tacosRecipe.getCategories().add(american);
         tacosRecipe.getCategories().add(fastFood);
