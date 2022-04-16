@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, Long> {
 
-    void deleteByUnitOfMeasure(String uom);
+    void deleteByDescription(String uom);
 
-    Optional<UnitOfMeasure> findByUnitOfMeasure(String uom);
+    Optional<UnitOfMeasure> findByDescription(String uom);
 }

@@ -32,9 +32,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         List<Recipe> recipes = new ArrayList<>(2);
 
         //create unit of measures
-        UnitOfMeasure teaSpoon = UnitOfMeasure.builder().id(1L).unitOfMeasure("teaSpoon").build();
-        UnitOfMeasure each = UnitOfMeasure.builder().id(2L).unitOfMeasure("each").build();
-        UnitOfMeasure tableSpoon = UnitOfMeasure.builder().id(3L).unitOfMeasure("tableSpoon").build();
+        UnitOfMeasure teaSpoon = UnitOfMeasure.builder().id(1L).description("teaSpoon").build();
+        UnitOfMeasure each = UnitOfMeasure.builder().id(2L).description("each").build();
+        UnitOfMeasure tableSpoon = UnitOfMeasure.builder().id(3L).description("tableSpoon").build();
 
         //create categories
         Category american = Category.builder().id(1L).categoryName("american").build();

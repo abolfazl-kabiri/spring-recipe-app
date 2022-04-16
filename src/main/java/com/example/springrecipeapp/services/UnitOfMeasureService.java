@@ -10,9 +10,9 @@ public interface UnitOfMeasureService {
 
     UnitOfMeasure save(UnitOfMeasure uom);
 
-    void deleteByUnitOfMeasure(String uom);
+    void deleteByDescription(String uom);
 
-    UnitOfMeasure findByUnitOfMeasure(String uom);
+    UnitOfMeasure findByDescription(String uom);
 
     Set<UnitOfMeasure> findAll();
 }

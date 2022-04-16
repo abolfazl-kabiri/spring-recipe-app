@@ -27,13 +27,13 @@ public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
     }
 
     @Override
-    public void deleteByUnitOfMeasure(String uom) {
-        unitOfMeasureRepository.deleteByUnitOfMeasure(uom);
+    public void deleteByDescription(String uom) {
+        unitOfMeasureRepository.deleteByDescription(uom);
     }
 
     @Override
-    public UnitOfMeasure findByUnitOfMeasure(String uom) {
-        return unitOfMeasureRepository.findByUnitOfMeasure(uom).orElse(null);
+    public UnitOfMeasure findByDescription(String uom) {
+        return unitOfMeasureRepository.findByDescription(uom).orElse(null);
     }
 
     @Override
