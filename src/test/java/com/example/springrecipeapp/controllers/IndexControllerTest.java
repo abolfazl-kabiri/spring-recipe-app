@@ -38,7 +38,8 @@ class IndexControllerTest {
     void setUp() {
 
         recipes = new HashSet<>();
-        Recipe recipe = Recipe.builder().id(1L).categories(new HashSet<>()).ingredients(new HashSet<>()).build();
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
         recipes.add(recipe);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();

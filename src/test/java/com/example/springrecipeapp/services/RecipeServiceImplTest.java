@@ -31,7 +31,7 @@ class RecipeServiceImplTest {
     @BeforeEach
     void setUp() {
         recipes = new HashSet<>();
-        recipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
+        recipe = new Recipe();
         recipes.add(recipe);
     }
 

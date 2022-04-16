@@ -1,7 +1,9 @@
 package com.example.springrecipeapp.bootstrap;
 
 import com.example.springrecipeapp.models.*;
+import com.example.springrecipeapp.services.CategoryService;
 import com.example.springrecipeapp.services.RecipeService;
+import com.example.springrecipeapp.services.UnitOfMeasureService;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -17,9 +19,14 @@ import java.util.Set;
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final RecipeService recipeService;
+    private final CategoryService categoryService;
+    private final UnitOfMeasureService unitOfMeasureService;
 
-    public RecipeBootstrap(RecipeService recipeService) {
+    public RecipeBootstrap(RecipeService recipeService,
+                           CategoryService categoryService, UnitOfMeasureService unitOfMeasureService) {
         this.recipeService = recipeService;
+        this.categoryService = categoryService;
+        this.unitOfMeasureService = unitOfMeasureService;
     }
 
     @Override
@@ -31,18 +38,20 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private List<Recipe> getRecipes() {
         List<Recipe> recipes = new ArrayList<>(2);
 
-        //create unit of measures
-        UnitOfMeasure teaSpoon = UnitOfMeasure.builder().id(1L).description("teaSpoon").build();
-        UnitOfMeasure each = UnitOfMeasure.builder().id(2L).description("each").build();
-        UnitOfMeasure tableSpoon = UnitOfMeasure.builder().id(3L).description("tableSpoon").build();
+        //read unit of measures
+        UnitOfMeasure teaSpoon = unitOfMeasureService.findByDescription("table spoon");
+        UnitOfMeasure each = unitOfMeasureService.findByDescription("each");
+        UnitOfMeasure tableSpoon = unitOfMeasureService.findByDescription("table spoon");
 
         //create categories
-        Category american = Category.builder().id(1L).categoryName("american").build();
-        Category persian = Category.builder().id(2L).categoryName("persian").build();
-        Category fastFood = Category.builder().id(3L).categoryName("fastFood").build();
+        Category american = categoryService.findByCategoryName("American");
+        Category persian = categoryService.findByCategoryName("Persian");
+        Category fastFood = categoryService.findByCategoryName("Fast Food");
+
 
         //create a recipe
-        Recipe guacRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
+//        Recipe guacRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
+        Recipe guacRecipe = new Recipe();
         guacRecipe.setDescription("Perfect Guacamole");
         guacRecipe.setPrepTime(10);
         guacRecipe.setCookTime(0);
@@ -59,6 +68,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "\n" +
                 "\n" +
                 "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvpiV9Sd");
+
 
         //create notes for guac
         Notes guacNotes = new Notes();
@@ -88,7 +98,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         recipes.add(guacRecipe);
 
-        Recipe tacosRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
+//        Recipe tacosRecipe = Recipe.builder().categories(new HashSet<>()).ingredients(new HashSet<>()).build();
+        Recipe tacosRecipe = new Recipe();
         tacosRecipe.setDescription("Spicy Grilled Chicken Taco");
         tacosRecipe.setCookTime(9);
         tacosRecipe.setPrepTime(20);

@@ -3,12 +3,11 @@ package com.example.springrecipeapp.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
-//@EqualsAndHashCode(exclude = {"ingredients", "categories"})
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "recipes")
@@ -40,9 +39,9 @@ public class Recipe {
     private Notes notes;
 
     @ManyToMany(mappedBy = "recipes")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @ManyToMany(mappedBy = "recipes")
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
 }
