@@ -15,9 +15,9 @@ public class IngredientController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping("/recipe/{recipe_id}/ingredients")
-    public String showAllRecipes(@PathVariable Long recipe_id, Model model) {
-        model.addAttribute("recipe", recipeService.findCommandById(recipe_id));
+    @RequestMapping("/recipe/{recipeId}/ingredients")
+    public String showAllIngredients(@PathVariable Long recipeId, Model model) {
+        model.addAttribute("recipe", recipeService.findCommandById(recipeId));
         return "recipe/ingredient/list";
     }
 }
