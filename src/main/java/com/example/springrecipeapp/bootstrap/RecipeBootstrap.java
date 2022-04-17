@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -22,8 +20,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final CategoryService categoryService;
     private final UnitOfMeasureService unitOfMeasureService;
 
-    public RecipeBootstrap(RecipeService recipeService,
-                           CategoryService categoryService, UnitOfMeasureService unitOfMeasureService) {
+    public RecipeBootstrap(RecipeService recipeService, CategoryService categoryService,
+                           UnitOfMeasureService unitOfMeasureService) {
         this.recipeService = recipeService;
         this.categoryService = categoryService;
         this.unitOfMeasureService = unitOfMeasureService;
@@ -46,7 +44,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         Category persian = categoryService.findByCategoryName("Persian");
         Category fastFood = categoryService.findByCategoryName("Fast Food");
 
-
         Recipe guacRecipe = new Recipe();
         guacRecipe.setDescription("Perfect Guacamole");
         guacRecipe.setPrepTime(10);
@@ -66,7 +63,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvpiV9Sd");
 
 
-        //create notes for guac
         Notes guacNotes = new Notes();
         guacNotes.setNotes("For a very quick guacamole just take a 1/4 cup of salsa and mix it in with your mashed avocados.\n" +
                 "Feel free to experiment! One classic Mexican guacamole has pomegranate seeds and chunks of peaches in it (a Diana Kennedy favorite). Try guacamole with added pineapple, mango, or strawberries.\n" +
@@ -78,16 +74,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         guacNotes.setRecipe(guacRecipe);
         guacRecipe.setNotes(guacNotes);
 
-        Set<Recipe> guacSet = new HashSet<>();
-        guacSet.add(guacRecipe);
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(2)).description("ripe avocados").unitOfMeasure(each).recipes(guacSet).build());
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(5)).description("Kosher salt").unitOfMeasure(teaSpoon).recipes(guacSet).build());
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(2)).description("fresh lime juice or lemon juice").unitOfMeasure(tableSpoon).recipes(guacSet).build());
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(2)).description("minced red onion or thinly sliced green onion").unitOfMeasure(tableSpoon).recipes(guacSet).build());
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(2)).description("serrano chiles, stems and seeds removed, minced").unitOfMeasure(each).recipes(guacSet).build());
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(2)).description("Cilantro").unitOfMeasure(tableSpoon).recipes(guacSet).build());
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(2)).description("freshly grated black pepper").unitOfMeasure(tableSpoon).recipes(guacSet).build());
-        guacRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(.5)).description("ripe tomato, seeds and pulp removed, chopped").unitOfMeasure(each).recipes(guacSet).build());
+        guacRecipe.addIngredient(new Ingredient("ripe avocados", BigDecimal.valueOf(1), teaSpoon));
+        guacRecipe.addIngredient(new Ingredient("Kosher salt", BigDecimal.valueOf(2), each));
 
         guacRecipe.getCategories().add(american);
         guacRecipe.getCategories().add(persian);
@@ -129,15 +117,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacoNotes.setRecipe(tacosRecipe);
         tacosRecipe.setNotes(tacoNotes);
 
-        Set<Recipe> tascoSet = new HashSet<>();
-        tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(2)).description("Ancho Chili Powder").unitOfMeasure(tableSpoon).recipes(tascoSet).build());
-        tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(1)).description("Dried Oregano").unitOfMeasure(teaSpoon).recipes(tascoSet).build());
-        tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(1)).description("Dried Cumin").unitOfMeasure(teaSpoon).recipes(tascoSet).build());
-        tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(1)).description("Sugar").unitOfMeasure(teaSpoon).recipes(tascoSet).build());
-        tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(.5)).description("Salt").unitOfMeasure(teaSpoon).recipes(tascoSet).build());
-        tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(1)).description("Clove of Garlic, Choppedr").unitOfMeasure(each).recipes(tascoSet).build());
-        tacosRecipe.getIngredients().add(Ingredient.builder().amount(BigDecimal.valueOf(1)).description("finely grated orange zestr").unitOfMeasure(each).recipes(tascoSet).build());
-        System.out.println(tacosRecipe.getIngredients().size());
+
+        tacosRecipe.getIngredients().add(new Ingredient("Ancho Chili Powder", BigDecimal.valueOf(3), tableSpoon));
+        tacosRecipe.getIngredients().add(new Ingredient("Dried Oregano", BigDecimal.valueOf(4), tableSpoon));
 
         tacosRecipe.getCategories().add(american);
         tacosRecipe.getCategories().add(fastFood);

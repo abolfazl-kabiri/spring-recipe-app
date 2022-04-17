@@ -1,6 +1,6 @@
 package com.example.springrecipeapp.models;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,8 +8,6 @@ import java.util.Set;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "recipes")
 public class Recipe {
 
@@ -17,8 +15,6 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Lob
     private String description;
     private Integer cookTime;
     private Integer prepTime;
@@ -29,8 +25,11 @@ public class Recipe {
     @Lob
     private String directions;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private Set<Ingredient> ingredients = new HashSet<>();
+
     @Lob
-    private byte[] image;
+    private Byte[] image;
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
@@ -38,10 +37,18 @@ public class Recipe {
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
-    @ManyToMany(mappedBy = "recipes")
-    private Set<Ingredient> ingredients = new HashSet<>();
 
-    @ManyToMany(mappedBy = "recipes")
+
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    public Recipe addIngredient(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
+    }
 
 }

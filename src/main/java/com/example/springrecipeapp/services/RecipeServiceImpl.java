@@ -6,9 +6,11 @@ import com.example.springrecipeapp.converters.RecipeToRecipeCommand;
 import com.example.springrecipeapp.models.Recipe;
 import com.example.springrecipeapp.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -58,14 +60,15 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    @Transactional
     public RecipeCommand saveCommand(RecipeCommand command) {
         Recipe savedRecipe = save(recipeCommandToRecipeConverter.convert(command));
         return recipeToRecipeCommandConverter.convert(savedRecipe);
     }
 
     @Override
+    @Transactional
     public RecipeCommand findCommandById(Long id) {
-        Recipe recipe = findById(id);
-        return recipeToRecipeCommandConverter.convert(recipe);
+        return recipeToRecipeCommandConverter.convert(findById(id));
     }
 }

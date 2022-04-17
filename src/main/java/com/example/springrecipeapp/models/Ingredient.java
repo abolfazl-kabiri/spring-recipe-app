@@ -4,14 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"recipes"})
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode(exclude = {"recipe"})
 @Table(name = "ingredients")
 public class Ingredient {
 
@@ -21,12 +19,27 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
-    @ManyToMany
-    @JoinTable(name = "recipe_ingredient", joinColumns = @JoinColumn(name = "ingredient_id"),
-    inverseJoinColumns = @JoinColumn(name = "recipe_id"))
-    private Set<Recipe>  recipes;
-
     @OneToOne
     private UnitOfMeasure unitOfMeasure;
+
+    @ManyToOne
+    private Recipe recipe;
+
+
+    public Ingredient() {
+    }
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
+        this.description = description;
+        this.amount = amount;
+        this.unitOfMeasure = uom;
+    }
+
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.unitOfMeasure = uom;
+        this.recipe = recipe;
+    }
 
 }

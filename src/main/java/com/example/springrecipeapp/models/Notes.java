@@ -1,5 +1,9 @@
 package com.example.springrecipeapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,9 +11,6 @@ import javax.persistence.*;
 @Entity
 @Data
 @EqualsAndHashCode(exclude = {"recipe"})
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "notes")
 public class Notes {
 

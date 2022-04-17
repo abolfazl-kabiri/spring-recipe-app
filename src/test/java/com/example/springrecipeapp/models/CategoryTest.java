@@ -11,7 +11,9 @@ class CategoryTest {
 
     @BeforeEach
     void setUp() {
-        category = Category.builder().id(1L).categoryName("american").build();
+        category = new Category();
+        category.setId(1L);
+        category.setCategoryName("american");
     }
 
     @Test
