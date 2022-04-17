@@ -22,8 +22,11 @@ public class Ingredient {
     @OneToOne
     private UnitOfMeasure unitOfMeasure;
 
-    @ManyToOne
-    private Recipe recipe;
+    @ManyToMany
+    @JoinTable(name = "recipe_ingredient",
+    joinColumns = @JoinColumn(name = "ingredient_id"),
+    inverseJoinColumns = @JoinColumn(name = "recipe_id"))
+    private Set<Recipe> recipes = new HashSet<>();
 
 
     public Ingredient() {
@@ -35,11 +38,15 @@ public class Ingredient {
         this.unitOfMeasure = uom;
     }
 
-    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Set<Recipe> recipes) {
         this.description = description;
         this.amount = amount;
         this.unitOfMeasure = uom;
-        this.recipe = recipe;
+        this.recipes = recipes;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        recipes.add(recipe);
     }
 
 }

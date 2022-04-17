@@ -1,6 +1,7 @@
 package com.example.springrecipeapp.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = "ingredients")
 @Table(name = "recipes")
 public class Recipe {
 
@@ -25,7 +27,7 @@ public class Recipe {
     @Lob
     private String directions;
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "recipes", cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
@@ -46,7 +48,7 @@ public class Recipe {
     private Set<Category> categories = new HashSet<>();
 
     public Recipe addIngredient(Ingredient ingredient){
-        ingredient.setRecipe(this);
+        ingredient.addRecipe(this);
         this.ingredients.add(ingredient);
         return this;
     }

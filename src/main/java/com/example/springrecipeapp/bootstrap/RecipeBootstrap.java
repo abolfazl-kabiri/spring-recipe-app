@@ -118,8 +118,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.setNotes(tacoNotes);
 
 
-        tacosRecipe.getIngredients().add(new Ingredient("Ancho Chili Powder", BigDecimal.valueOf(3), tableSpoon));
-        tacosRecipe.getIngredients().add(new Ingredient("Dried Oregano", BigDecimal.valueOf(4), tableSpoon));
+        tacosRecipe.addIngredient(new Ingredient("Ancho Chili Powder", BigDecimal.valueOf(3), tableSpoon));
+        tacosRecipe.addIngredient(new Ingredient("Dried Oregano", BigDecimal.valueOf(4), tableSpoon));
 
         tacosRecipe.getCategories().add(american);
         tacosRecipe.getCategories().add(fastFood);
