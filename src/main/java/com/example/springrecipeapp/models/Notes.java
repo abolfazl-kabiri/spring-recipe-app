@@ -1,11 +1,6 @@
 package com.example.springrecipeapp.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
@@ -23,5 +18,4 @@ public class Notes {
 
     @OneToOne
     private Recipe recipe;
-
 }
