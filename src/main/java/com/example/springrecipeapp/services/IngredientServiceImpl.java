@@ -42,7 +42,7 @@ public class IngredientServiceImpl implements IngredientService {
 
         Optional<IngredientCommand> ingredientCommandOptional = recipe.getIngredients().stream()
                 .filter(ingredient -> ingredient.getId().equals(ingredientId))
-                .map( ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
+                .map(ingredientToIngredientCommand::convert).findFirst();
 
         if(!ingredientCommandOptional.isPresent()){
         }
@@ -94,5 +94,17 @@ public class IngredientServiceImpl implements IngredientService {
             return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
 
+    }
+
+    @Override
+    public void deleteById(Long recipeId, Long ingredientId) {
+
+        Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new RuntimeException("no recipe found"));
+        Ingredient ingredient = recipe.getIngredients().stream()
+                .filter(i -> i.getId().equals(ingredientId)).findFirst().get();
+
+        ingredient.setRecipe(null);
+        recipe.getIngredients().remove(ingredient);
+        recipeRepository.save(recipe);
     }
 }
