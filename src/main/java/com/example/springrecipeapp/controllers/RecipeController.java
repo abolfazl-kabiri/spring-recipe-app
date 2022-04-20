@@ -35,7 +35,7 @@ public class RecipeController {
     }
 
 
-    @PostMapping("/recipe/new")
+    @PostMapping("recipe")
     public String processCreateRecipeForm(@ModelAttribute RecipeCommand recipe, BindingResult result) {
 
         if (result.hasErrors()) {
