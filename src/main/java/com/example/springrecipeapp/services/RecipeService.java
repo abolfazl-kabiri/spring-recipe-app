@@ -8,13 +8,14 @@ import java.util.Set;
 
 public interface RecipeService {
 
-    void delete(Recipe recipe);
-    void deleteById(Long id);
-    Recipe save(Recipe recipe);
     Set<Recipe> getRecipes();
-    Recipe findById(Long id);
-    Iterable<Recipe> saveAll(List<Recipe> recipes);
-    RecipeCommand saveCommand(RecipeCommand command);
-    RecipeCommand findCommandById(Long id);
+
+    Recipe findById(Long l);
+
+    RecipeCommand findCommandById(Long l);
+
+    RecipeCommand saveRecipeCommand(RecipeCommand command);
+
+    void deleteById(Long idToDelete);
 
 }

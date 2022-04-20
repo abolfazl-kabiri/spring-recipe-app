@@ -2,7 +2,6 @@ package com.example.springrecipeapp.services;
 
 import com.example.springrecipeapp.commands.UnitOfMeasureCommand;
 import com.example.springrecipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
-import com.example.springrecipeapp.models.UnitOfMeasure;
 import com.example.springrecipeapp.repositories.UnitOfMeasureRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,46 +14,19 @@ import java.util.stream.StreamSupport;
 public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
 
     private final UnitOfMeasureRepository unitOfMeasureRepository;
-    private final UnitOfMeasureToUnitOfMeasureCommand converter;
+    private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
-    public UnitOfMeasureServiceImpl(UnitOfMeasureRepository unitOfMeasureRepository,
-                                    UnitOfMeasureToUnitOfMeasureCommand converter) {
+    public UnitOfMeasureServiceImpl(UnitOfMeasureRepository unitOfMeasureRepository, UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand) {
         this.unitOfMeasureRepository = unitOfMeasureRepository;
-        this.converter = converter;
+        this.unitOfMeasureToUnitOfMeasureCommand = unitOfMeasureToUnitOfMeasureCommand;
     }
 
     @Override
-    public void delete(UnitOfMeasure uom) {
-        unitOfMeasureRepository.delete(uom);
-    }
-
-    @Override
-    public UnitOfMeasure save(UnitOfMeasure uom) {
-        return unitOfMeasureRepository.save(uom);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        unitOfMeasureRepository.deleteById(id);
-    }
-
-    @Override
-    public UnitOfMeasure findByDescription(String description) {
-        return unitOfMeasureRepository.findByDescription(description).orElse(null);
-    }
-
-    @Override
-    public Set<UnitOfMeasureCommand> findAll() {
+    public Set<UnitOfMeasureCommand> listAllUoms() {
 
         return StreamSupport.stream(unitOfMeasureRepository.findAll()
-                        .spliterator(), false)
-                .map(converter::convert)
+                .spliterator(), false)
+                .map(unitOfMeasureToUnitOfMeasureCommand::convert)
                 .collect(Collectors.toSet());
-
-    }
-
-    @Override
-    public UnitOfMeasure findById(Long id) {
-        return unitOfMeasureRepository.findById(id).orElse(null);
     }
 }

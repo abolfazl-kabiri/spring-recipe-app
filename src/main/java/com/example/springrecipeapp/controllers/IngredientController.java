@@ -1,6 +1,8 @@
 package com.example.springrecipeapp.controllers;
 
 import com.example.springrecipeapp.commands.IngredientCommand;
+import com.example.springrecipeapp.commands.RecipeCommand;
+import com.example.springrecipeapp.commands.UnitOfMeasureCommand;
 import com.example.springrecipeapp.services.IngredientService;
 import com.example.springrecipeapp.services.RecipeService;
 import com.example.springrecipeapp.services.UnitOfMeasureService;
@@ -29,24 +31,21 @@ public class IngredientController {
     }
 
     @RequestMapping("/recipe/{recipeId}/ingredient/{ingredientId}/show")
-    public String showAllIngredients(@PathVariable Long recipeId, @PathVariable Long ingredientId, Model model) {
+    public String showSingleIngredient(@PathVariable Long recipeId, @PathVariable Long ingredientId, Model model) {
 
-        IngredientCommand ingredient = ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId);
-        model.addAttribute("ingredient", ingredient);
-
+        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId));
         return "/recipe/ingredient/show";
     }
 
     @GetMapping("/recipe/{recipeId}/ingredient/{ingredientId}/update")
-    public String initUpdateIngredienteForm(@PathVariable Long recipeId, @PathVariable Long ingredientId, Model model) {
+    public String initUpdateIngredientForm(@PathVariable Long recipeId, @PathVariable Long ingredientId, Model model) {
 
-        model.addAttribute("ingredient",ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId));
-        model.addAttribute("uomList", unitOfMeasureService.findAll());
+        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId));
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
         return "/recipe/ingredient/ingredientForm";
     }
 
-//    @PostMapping("/recipe/{recipeId}/ingredient/update")
-    @RequestMapping("recipe/{recipeId}/ingredient")
+    @PostMapping("/recipe/{recipeId}/ingredient")
     public String processIngredientForm(@ModelAttribute IngredientCommand ingredient)
     {
         IngredientCommand saved = ingredientService.saveIngredientCommand(ingredient);

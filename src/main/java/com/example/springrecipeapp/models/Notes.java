@@ -3,19 +3,19 @@ package com.example.springrecipeapp.models;
 import lombok.*;
 import javax.persistence.*;
 
-@Entity
 @Data
 @EqualsAndHashCode(exclude = {"recipe"})
-@Table(name = "notes")
+@Entity
 public class Notes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    private String notes;
-
     @OneToOne
     private Recipe recipe;
+
+    @Lob
+    private String recipeNotes;
+
 }

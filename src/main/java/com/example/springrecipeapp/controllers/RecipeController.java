@@ -42,7 +42,7 @@ public class RecipeController {
             throw new RuntimeException("binding result has errors");
         }
 
-        RecipeCommand savedCommand = recipeService.saveCommand(recipe);
+        RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipe);
         return "redirect:/recipe/show/" + savedCommand.getId();
     }
 

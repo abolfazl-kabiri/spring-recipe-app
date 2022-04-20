@@ -12,11 +12,10 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class RecipeCommand {
-
     private Long id;
     private String description;
-    private Integer cookTime;
     private Integer prepTime;
+    private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;

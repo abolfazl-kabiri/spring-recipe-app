@@ -5,62 +5,86 @@ import com.example.springrecipeapp.converters.IngredientCommandToIngredient;
 import com.example.springrecipeapp.converters.IngredientToIngredientCommand;
 import com.example.springrecipeapp.models.Ingredient;
 import com.example.springrecipeapp.models.Recipe;
+import com.example.springrecipeapp.repositories.RecipeRepository;
+import com.example.springrecipeapp.repositories.UnitOfMeasureRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Objects;
 import java.util.Optional;
 
-@Service
-public class IngredientServiceImpl implements IngredientService{
 
-    private final RecipeService recipeService;
+@Service
+public class IngredientServiceImpl implements IngredientService {
+
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
-    private final UnitOfMeasureService unitOfMeasureService;
+    private final RecipeRepository recipeRepository;
+    private final UnitOfMeasureRepository unitOfMeasureRepository;
 
-    public IngredientServiceImpl(RecipeService recipeService,
-                                 IngredientToIngredientCommand ingredientToIngredientCommand,
+    public IngredientServiceImpl(IngredientToIngredientCommand ingredientToIngredientCommand,
                                  IngredientCommandToIngredient ingredientCommandToIngredient,
-                                 UnitOfMeasureService unitOfMeasureService) {
-        this.recipeService = recipeService;
+                                 RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
         this.ingredientToIngredientCommand = ingredientToIngredientCommand;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
-        this.unitOfMeasureService = unitOfMeasureService;
+        this.recipeRepository = recipeRepository;
+        this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
     @Override
     public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
-        Recipe recipe = recipeService.findById(recipeId);
 
-        if (recipe != null) {
-            return recipe.getIngredients().stream().filter(ingredient -> ingredient.getId().equals(ingredientId))
-                    .map(ingredientToIngredientCommand::convert).findFirst().orElse(null);
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+
+        if (!recipeOptional.isPresent()){
         }
-        return null;
+
+        Recipe recipe = recipeOptional.get();
+
+        Optional<IngredientCommand> ingredientCommandOptional = recipe.getIngredients().stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                .map( ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst();
+
+        if(!ingredientCommandOptional.isPresent()){
+        }
+
+        return ingredientCommandOptional.get();
     }
 
     @Override
     @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
-        Recipe recipe = recipeService.findById(command.getRecipeId());
-
-        Optional<Ingredient> ingredientOptional = recipe.getIngredients().stream()
-                .filter(ingredient -> ingredient.getId().equals(command.getId()))
-                .findFirst();
-
-        if (ingredientOptional.isPresent()) {
-            Ingredient ingredient = ingredientOptional.get();
-            ingredient.setDescription(command.getDescription());
-            ingredient.setAmount(command.getAmount());
-            ingredient.setUnitOfMeasure(unitOfMeasureService.findById(command.getUnitOfMeasure().getId()));
+        if(!recipeOptional.isPresent()){
+            return new IngredientCommand();
         } else {
-            recipe.addIngredient(ingredientCommandToIngredient.convert(command));
+            Recipe recipe = recipeOptional.get();
+
+            Optional<Ingredient> ingredientOptional = recipe
+                    .getIngredients()
+                    .stream()
+                    .filter(ingredient -> ingredient.getId().equals(command.getId()))
+                    .findFirst();
+
+            if(ingredientOptional.isPresent()){
+                Ingredient ingredientFound = ingredientOptional.get();
+                ingredientFound.setDescription(command.getDescription());
+                ingredientFound.setAmount(command.getAmount());
+                ingredientFound.setUom(unitOfMeasureRepository
+                        .findById(command.getUom().getId())
+                        .orElseThrow(() -> new RuntimeException("UOM NOT FOUND"))); //todo address this
+            } else {
+                //add new Ingredient
+                recipe.addIngredient(ingredientCommandToIngredient.convert(command));
+            }
+
+            Recipe savedRecipe = recipeRepository.save(recipe);
+
+            return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
+                    .filter(recipeIngredients -> recipeIngredients.getId().equals(command.getId()))
+                    .findFirst()
+                    .get());
         }
 
-        Recipe savedRecipe = recipeService.save(recipe);
-        return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
-                .filter(ingredient -> ingredient.getId().equals(command.getId())).findFirst().get());
     }
 }

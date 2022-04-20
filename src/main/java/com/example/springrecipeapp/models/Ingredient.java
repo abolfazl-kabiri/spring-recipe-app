@@ -1,16 +1,14 @@
 package com.example.springrecipeapp.models;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
-@Entity
 @Data
 @EqualsAndHashCode(exclude = {"recipe"})
-@Table(name = "ingredients")
+@Entity
 public class Ingredient {
 
     @Id
@@ -20,11 +18,10 @@ public class Ingredient {
     private BigDecimal amount;
 
     @OneToOne
-    private UnitOfMeasure unitOfMeasure;
+    private UnitOfMeasure uom;
 
     @ManyToOne
     private Recipe recipe;
-
 
     public Ingredient() {
     }
@@ -32,13 +29,13 @@ public class Ingredient {
     public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
         this.description = description;
         this.amount = amount;
-        this.unitOfMeasure = uom;
+        this.uom = uom;
     }
 
     public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
         this.description = description;
         this.amount = amount;
-        this.unitOfMeasure = uom;
+        this.uom = uom;
         this.recipe = recipe;
     }
 

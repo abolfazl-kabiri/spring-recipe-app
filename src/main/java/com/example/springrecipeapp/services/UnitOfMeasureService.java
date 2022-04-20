@@ -7,15 +7,5 @@ import java.util.Set;
 
 public interface UnitOfMeasureService {
 
-    void delete(UnitOfMeasure uom);
-
-    UnitOfMeasure save(UnitOfMeasure uom);
-
-    void deleteById(Long id);
-
-    UnitOfMeasure findByDescription(String description);
-
-    UnitOfMeasure findById(Long id);
-
-    Set<UnitOfMeasureCommand> findAll();
+    Set<UnitOfMeasureCommand> listAllUoms();
 }
