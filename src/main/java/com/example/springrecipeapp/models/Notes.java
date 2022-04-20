@@ -3,7 +3,8 @@ package com.example.springrecipeapp.models;
 import lombok.*;
 import javax.persistence.*;
 
-@Data
+@Setter
+@Getter
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
