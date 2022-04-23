@@ -3,6 +3,7 @@ package com.example.springrecipeapp.services;
 import com.example.springrecipeapp.commands.RecipeCommand;
 import com.example.springrecipeapp.converters.RecipeCommandToRecipe;
 import com.example.springrecipeapp.converters.RecipeToRecipeCommand;
+import com.example.springrecipeapp.exceptions.NotFoundException;
 import com.example.springrecipeapp.models.Recipe;
 import com.example.springrecipeapp.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,6 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Set<Recipe> getRecipes() {
-//        log.debug("I'm in the service");
 
         Set<Recipe> recipeSet = new HashSet<>();
         recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
@@ -40,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found!");
         }
 
         return recipeOptional.get();
