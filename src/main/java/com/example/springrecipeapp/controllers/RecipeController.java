@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 public class RecipeController {
 
@@ -37,11 +39,11 @@ public class RecipeController {
     }
 
 
-    @PostMapping("recipe")
-    public String processCreateRecipeForm(@ModelAttribute RecipeCommand recipe, BindingResult result) {
+    @PostMapping("/recipe")
+    public String processCreateRecipeForm(@Valid @ModelAttribute("recipe") RecipeCommand recipe, BindingResult result) {
 
         if (result.hasErrors()) {
-            throw new RuntimeException("binding result has errors");
+            return "/recipe/recipeForm";
         }
 
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipe);
