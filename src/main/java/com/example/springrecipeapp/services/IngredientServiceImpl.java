@@ -3,6 +3,7 @@ package com.example.springrecipeapp.services;
 import com.example.springrecipeapp.commands.IngredientCommand;
 import com.example.springrecipeapp.converters.IngredientCommandToIngredient;
 import com.example.springrecipeapp.converters.IngredientToIngredientCommand;
+import com.example.springrecipeapp.exceptions.NotFoundException;
 import com.example.springrecipeapp.models.Ingredient;
 import com.example.springrecipeapp.models.Recipe;
 import com.example.springrecipeapp.repositories.RecipeRepository;
@@ -36,6 +37,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
         if (!recipeOptional.isPresent()){
+            throw new NotFoundException("recipe not found");
         }
 
         Recipe recipe = recipeOptional.get();
@@ -45,6 +47,7 @@ public class IngredientServiceImpl implements IngredientService {
                 .map(ingredientToIngredientCommand::convert).findFirst();
 
         if(!ingredientCommandOptional.isPresent()){
+            throw new NotFoundException("ingredient not found");
         }
 
         return ingredientCommandOptional.get();
